@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, type FormEvent } from "react";
-import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { modules } from "@/data/modules";
 import { parseCompletedModules } from "@/lib/utils";
@@ -10,7 +9,6 @@ import { Terminal, User, Award, RotateCcw, Pencil, Trash2 } from "lucide-react";
 
 export default function Profile() {
   const { user, loading, updateUsername, deleteAccount } = useAuth();
-  const router = useRouter();
   const [achievements, setAchievements] = useState<{ type: string; title: string; description: string; earnedAt: string }[]>([]);
 
   useEffect(() => {
