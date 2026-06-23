@@ -16,6 +16,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npx prisma generate
       - run: npm run lint
 
   typecheck:
@@ -27,6 +28,7 @@ jobs:
           node-version: 24
           cache: npm
       - run: npm ci
+      - run: npx prisma generate
       - run: npx tsc --noEmit
 
   build:
