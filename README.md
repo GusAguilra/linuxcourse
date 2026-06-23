@@ -86,6 +86,10 @@ NEXT_PUBLIC_APP_URL="http://localhost:3000"
 
 Todo corre **localmente** en tu máquina. No hay servidores externos, no se recopilan datos, no hay telemetría. Tu progreso, sesión e información nunca salen de tu computadora.
 
+## Disclaimer
+
+Este proyecto está **en desarrollo activo**. El contenido puede contener errores, omisiones o inexactitudes. Si encuentras algo incorrecto, [abre un issue](https://github.com/GusAguilra/linuxcourse/issues) o manda un PR — toda contribución es bienvenida.
+
 ## Demo
 
 ![Módulos](gifts/Modules.gif)
