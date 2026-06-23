@@ -1,26 +1,440 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #09090b;
+  --foreground: #e4e4e7;
+  --sidebar-width: 16rem;
+  --terminal-bg: #0d1117;
+  --terminal-bar: #15171c;
+  --terminal-border: #1f2230;
+  --card-bg: #0d1117;
+  --card-border: #1f2230;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+/* ── Skip-to-content ── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  background: #22c55e;
+  color: #09090b;
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: top 0.1s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Focus ── */
+*:focus-visible {
+  outline: 2px solid #22c55e;
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ── Terminal Window ── */
+.terminal-window {
+  overflow: hidden;
+  border: 1px solid var(--terminal-border);
+  border-radius: 0.75rem;
+  background: var(--terminal-bg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+.terminal-window-bar {
+  position: relative;
+  display: flex;
+  min-height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--terminal-border);
+  background: var(--terminal-bar);
+}
+
+.terminal-window-controls {
+  position: absolute;
+  left: 0.75rem;
+  display: flex;
+  gap: 0.4rem;
+}
+
+.terminal-dot {
+  height: 0.7rem;
+  width: 0.7rem;
+  border-radius: 999px;
+  transition: opacity 0.15s;
+}
+
+.terminal-dot-red {
+  background: #ef4444;
+}
+.terminal-dot-yellow {
+  background: #eab308;
+}
+.terminal-dot-green {
+  background: #22c55e;
+}
+
+.terminal-window-title {
+  max-width: 55%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: #71717a;
+}
+
+.terminal-window-body {
+  background: var(--terminal-bg);
+  padding: 0.8rem;
+}
+
+.terminal-window-body.p-0 {
+  padding: 0;
+}
+
+.terminal-window-prompt {
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  color: #22c55e;
+}
+
+.terminal-window-prompt::after {
+  content: "$";
+  margin-left: 0.25rem;
+  color: #f472b6;
+}
+
+/* ── Content Card (for reading areas) ── */
+.content-card {
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  background: var(--card-bg);
+  padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ── Legacy terminal-card alias ── */
+.terminal-card {
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  background: rgba(13, 17, 23, 0.5);
+}
+
+/* ── Content Reading Areas ── */
+.content-section {
+  border: 1px solid var(--card-border);
+  border-radius: 0.75rem;
+  background: var(--card-bg);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ── Prose (Reading Typography) ── */
+.prose {
+  max-width: none;
+}
+
+.prose h2 {
+  color: #f4f4f5;
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.01em;
+}
+
+.prose h3 {
+  color: #d4d4d8;
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h4 {
+  color: #d4d4d8;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  color: #a1a1aa;
+  line-height: 1.75;
+  margin-bottom: 1.15rem;
+  font-size: 0.925rem;
+}
+
+.prose a {
+  color: #22c55e;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.prose a:hover {
+  color: #4ade80;
+  text-decoration: underline;
+}
+
+.prose strong {
+  color: #e4e4e7;
+  font-weight: 600;
+}
+
+.prose code {
+  background: #18181b;
+  color: #22c55e;
+  padding: 0.125rem 0.4rem;
+  border-radius: 0.25rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.85rem;
+  border: 1px solid #27272a;
+}
+
+.prose pre {
+  background: #0a0a0b;
+  border: 1px solid #1f2230;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  color: #e4e4e7;
+  border: none;
+  font-size: 0.825rem;
+  line-height: 1.6;
+}
+
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.prose th {
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #27272a;
+  color: #e4e4e7;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.prose td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #18181b;
+  color: #a1a1aa;
+  font-size: 0.875rem;
+}
+
+.prose tr:hover td {
+  background: #18181b;
+}
+
+.prose ul,
+.prose ol {
+  color: #a1a1aa;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+  line-height: 1.7;
+}
+
+.prose li {
+  margin-bottom: 0.35rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid #22c55e;
+  padding-left: 1rem;
+  color: #71717a;
+  margin-bottom: 1rem;
+  font-style: italic;
+}
+
+.prose hr {
+  border-color: #1f2230;
+  margin: 2rem 0;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  border: 1px solid #1f2230;
+  max-width: 100%;
+}
+
+/* ── Prose Callouts ── */
+.prose .callout {
+  border-left: 3px solid;
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.prose .callout-tip {
+  background: rgba(34, 197, 94, 0.05);
+  border-color: #22c55e;
+  color: #86efac;
+}
+
+.prose .callout-tip::before {
+  content: "💡 ";
+  font-weight: 600;
+}
+
+.prose .callout-info {
+  background: rgba(59, 130, 246, 0.05);
+  border-color: #3b82f6;
+  color: #93c5fd;
+}
+
+.prose .callout-info::before {
+  content: "ℹ️ ";
+  font-weight: 600;
+}
+
+.prose .callout-warning {
+  background: rgba(245, 158, 11, 0.05);
+  border-color: #f59e0b;
+  color: #fcd34d;
+}
+
+.prose .callout-warning::before {
+  content: "⚠️ ";
+  font-weight: 600;
+}
+
+.prose .callout-danger {
+  background: rgba(239, 68, 68, 0.05);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+.prose .callout-danger::before {
+  content: "🚨 ";
+  font-weight: 600;
+}
+
+.prose .callout p {
+  margin-bottom: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose .callout p + p {
+  margin-top: 0.5rem;
+}
+
+.prose > :first-child {
+  margin-top: 0 !important;
+}
+
+.prose > :last-child {
+  margin-bottom: 0 !important;
+}
+
+.prose kbd {
+  background: #18181b;
+  border: 1px solid #27272a;
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.375rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8rem;
+  color: #d4d4d8;
+}
+
+/* ── XTerm overrides ── */
+.xterm {
+  padding: 0.5rem;
+  height: 100%;
+}
+
+.xterm .xterm-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: #27272a transparent;
+}
+
+.xterm-viewport::-webkit-scrollbar {
+  width: 6px;
+}
+
+.xterm-viewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 3px;
+}
+
+/* ── Animations ── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #1f2230 25%, #27272a 50%, #1f2230 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* ── Glow effects ── */
+.glow-green {
+  box-shadow: 0 0 20px rgba(34, 197, 94, 0.08);
+}
+
+/* ── Glass morphism variants ── */
+.glass-card {
+  background: rgba(13, 17, 23, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(31, 34, 48, 0.8);
 }
