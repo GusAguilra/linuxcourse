@@ -2,6 +2,8 @@
 
 Plataforma interactiva para aprender Linux desde cero hasta nivel avanzado, con terminal simulada, módulos estructurados, ejercicios prácticos y quizzes.
 
+![Landing](gifts/intro.gif)
+
 ## Stack
 
 - **Next.js 16** — App Router, API Routes
@@ -86,7 +88,6 @@ Todo corre **localmente** en tu máquina. No hay servidores externos, no se reco
 
 ## Demo
 
-![Landing](gifts/intro.gif)
 ![Módulos](gifts/Modules.gif)
 ![Contenido](gifts/contenidomodulo1.gif)
 ![Terminal](gifts/terminal.gif)
